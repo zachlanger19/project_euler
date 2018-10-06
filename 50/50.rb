@@ -24,4 +24,4 @@ while index1 + bestConsecutive < primes.length
 end
 
 p result
-p "#{(Time.now - start) * 1000} milliseconds"
+p "#{(Time.now - start)} seconds"

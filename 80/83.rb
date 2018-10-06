@@ -1,7 +1,7 @@
 start = Time.now
 
 $matrix = []
-File.open("../files/82.txt").each do |line|
+File.open("../files/83.txt").each do |line|
     row = line.chomp.to_s.split(',').map! { |s| s.to_i }
     $matrix.push(row)
 end
@@ -41,15 +41,15 @@ class Point
     def move
         new_points = []
         # move left
-        # if @col > 0
-        #     row = @row
-        #     col = @col - 1
-        #     val = @val + $matrix[row][col]
-        #     if $best_found_vals[row][col] > val
-        #         $best_found_vals[row][col] = val
-        #         new_points << Point.new(row, col, val)
-        #     end
-        # end
+        if @col > 0
+            row = @row
+            col = @col - 1
+            val = @val + $matrix[row][col]
+            if $best_found_vals[row][col] > val
+                $best_found_vals[row][col] = val
+                new_points << Point.new(row, col, val)
+            end
+        end
 
         # move up
         if @row > 0
@@ -88,11 +88,8 @@ class Point
     end
 end
 
-active_points = []
-(0..$height - 1).each do |starting_row|
-    active_points << Point.new(starting_row, 0, $matrix[starting_row][0])
-    $best_found_vals[starting_row][0] = $matrix[starting_row][0]
-end
+active_points = [Point.new(0, 0, $matrix[0][0])]
+$best_found_vals[0][0] = $matrix[0][0]
 
 while active_points.length > 0
     new_points = []
@@ -102,6 +99,6 @@ while active_points.length > 0
     active_points = new_points
 end
 
-p ($best_found_vals.transpose)[$height - 1].min
+p $best_found_vals[$height-1][$width-1]
 
 puts "#{Time.now - start} seconds"
